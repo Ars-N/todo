@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vue</title>
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="app" v-cloak>
+  <div class="card">
+    <h1>{{title}}</h1>
+    <div class="form-control">
+      <h5 v-show="warning"
+          :style="{color:warning?'red':'green'}"
+      >*не должно быть *&^%</h5>
+      <input
+          type="text"
+          :placeholder="placeholderString"
+          v-model="inputValue"
+          @keypress.enter="btnAddTodoHandler"
+      >
+    </div>
+    <button class="btn" @click="btnAddTodoHandler">add</button>
+    <hr />
+
+    <ul class="list" v-if="todoList.length">
+      <li class="list-item"
+          v-for="(element, index) in todoList"
+          :key="element.id"
+      >
+        <span :class="todoList.length>5?'primary':'bold'">{{stringToUpperCase(element.value)}}</span>
+
+<!--        <span :class="{-->
+<!--          'primary':true,-->
+<!--          'bold':todoList.length>5-->
+<!--        }">{{stringToUpperCase(element.value)}}</span>-->
+
+<!--        <span :class="['bold', {'primary':todoList.length>5}]">{{stringToUpperCase(element.value)}}</span>-->
+
+        <button
+            class="btn danger"
+            @click="btnRemoveTodo(index)"
+        >
+          remove
+        </button>
+      </li>
+    </ul>
+    <div v-else >Список пуст!!!</div>
+
+    <hr />
+    <div>Заметок: {{todoList.length}} | Удвоенное: {{doubleCount}}</div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/vue@next"></script>
+<script src="app.js"></script>
+</body>
+</html>
